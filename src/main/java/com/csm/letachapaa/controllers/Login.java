@@ -1,8 +1,8 @@
 package com.csm.letachapaa.controllers;
 
 import com.csm.letachapaa.models.Users;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.csm.letachapaa.modules.LoginModule;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/login")
 public class Login {
+    @Autowired
+    LoginModule loginModule;
+
 
     @PostMapping(value = "/validate")
-    public ResponseEntity Login(@RequestBody Users users) {
+    public boolean Login(@RequestBody Users users) {
 
-        System.out.println("Response from body " + users.toString());
-        return ResponseEntity.ok(HttpStatus.OK);
+        return loginModule.authenticateCredentials(users);
 
     }
 }
